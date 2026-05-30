@@ -145,6 +145,102 @@ The backend exposes a single active endpoint under `/users`.
 }
 ```
 
+### Get User Profile
+
+- **URL:** `/users/profile`
+- **Method:** `GET`
+- **Description:** Returns the authenticated user's profile information.
+- **Authentication:** Requires a valid JWT token in `Authorization: Bearer <token>` header or `token` cookie.
+
+### Request Example
+
+```http
+GET /users/profile HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer <jwt-token>
+```
+
+### Successful Response
+
+- **Status:** `200 OK`
+- **Example:**
+
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john@example.com"
+}
+```
+
+### Error Responses
+
+- **Missing token:** `401 Unauthorized`
+- **Example:**
+
+```json
+{
+  "message": "Unauthorized: token not found"
+}
+```
+
+- **Blacklisted or invalid token:** `401 Unauthorized`
+- **Example:**
+
+```json
+{
+  "message": "Unauthorized: not an authentic user"
+}
+```
+
+### Logout User
+
+- **URL:** `/users/logout`
+- **Method:** `GET`
+- **Description:** Logs out the authenticated user by clearing the auth cookie and blacklisting the token.
+- **Authentication:** Requires a valid JWT token in `Authorization: Bearer <token>` header or `token` cookie.
+
+### Request Example
+
+```http
+GET /users/logout HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer <jwt-token>
+```
+
+### Successful Response
+
+- **Status:** `200 OK`
+- **Example:**
+
+```json
+{
+  "messge": "logged out"
+}
+```
+
+### Error Responses
+
+- **Missing token:** `401 Unauthorized`
+- **Example:**
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+- **Blacklisted token:** `401 Unauthorized`
+- **Example:**
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
 ## Files Involved
 
 - `backend/app.js` - Express app configuration and route registration.
