@@ -263,3 +263,54 @@ Authorization: Bearer <jwt-token>
    npm start
    ```
 5. Send POST requests to `http://localhost:<PORT>/users/register` or `http://localhost:<PORT>/users/login`.
+
+## Captain Endpoints
+
+The backend also exposes captain-related endpoints under `/captains` (defined in `backend/routes/captain_router.js`).
+
+### Register Captain
+
+- **URL:** `/captains/register`
+- **Method:** `POST`
+- **Request body example:**
+
+```json
+{
+  "fullname": { "firstname": "John", "lastname": "Doe" },
+  "email": "john@example.com",
+  "password": "secret123",
+  "vehicle": {
+    "color": "red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Login Captain
+
+- **URL:** `/captains/login`
+- **Method:** `POST`
+- **Request body example:**
+
+```json
+{
+  "email": "john@example.com",
+  "password": "secret123"
+}
+```
+
+### Get Captain Profile
+
+- **URL:** `/captains/profile`
+- **Method:** `GET`
+- **Authentication:** Requires a valid JWT token in `Authorization: Bearer <token>` header or `token` cookie.
+
+### Logout Captain
+
+- **URL:** `/captains/logout`
+- **Method:** `GET`
+- **Behavior:** Clears the `token` cookie and blacklists the token.
+
+For implementation details, see `backend/controllers/captain_controller.js`, `backend/models/captain_model.js`, and `backend/services/captain_services.js`.
